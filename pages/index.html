@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>My Web Page!</title>
+    <title>Financial Calculator API</title>
 
     <!-- Bootstrap -->
     <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
@@ -23,7 +23,150 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Hello, world!</h1>
+                <h1>Financial Calculator (FC) API</h1>
+                <section>
+                    <h2>About Xiaoyu Zhai</h2>
+                    <p>I love creating cool stuff, especially mobile and web apps.</p>
+                    <ul>
+                        <li>Computer Science</li>
+                        <li>Because of you</li>
+                        <li>To learn node.js</li>
+                        <li>Java</li>
+                        <li>Dope Husky</li>
+                    </ul>
+                    <h2>What is FC API</h2>
+                    <p>I provide 3 calculate funcs in this website, which are all related to our financial life. The first one is to calculate the amount of money you will have in your <strong>retirement fund</strong>. The second one is to calculate the end result of a sum of money that you <strong>invested</strong>. The last one is to calculate how many months it will take to <strong>pay off a loan</strong>.</p>
+                </section>
+                <h2>API Route Instructions</h2>
+                <section>
+                    <h3>1. <code>perMonthRetirementSavings</code> API Route</h3>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Variables</th>
+                            <th>years</th>
+                            <th>perMonth</th>
+                            <th>interestRate</th>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>How many years until retirement</td>
+                            <td>The amount saving per month</td>
+                            <td>The yearly interest rate of investment</td>
+                        </tr>
+                        <tr class="success">
+                            <th rowspan="2">Request I</th>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>0.1</td>
+                        </tr>
+                        <tr class="success">
+                            <td colspan="3"><code>http://localhost:3000/api/perMonthRetirementSavings?years=3&perMonth=5&interestRate=0.1</code></td>
+                        </tr>
+                        <tr class="success">
+                            <th>Response I</th>
+                            <td colspan="3"><code>{"status":"success","result":210.65001466339126}</code></td>
+                        </tr>
+                        <tr class="danger">
+                            <th rowspan="2">Request II</th>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>a</td>
+                        </tr>
+                        <tr class="danger">
+                            <td colspan="3"><code>http://localhost:3000/api/perMonthRetirementSavings?years=3&perMonth=5&interestRate=a</code></td>
+                        </tr>
+                        <tr class="danger">
+                            <th>Response II</th>
+                            <td colspan="3"><code>{"status":"error","message":"Invalid parameter (yearlyInterestRateOfInvestment)!"}</code></td>
+                        </tr>
+                    </table>
+                </section>
+                <section>
+                    <h3>2. <code>investedAmount</code> API Route</h3>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Variables</th>
+                            <th>years</th>
+                            <th>initial</th>
+                            <th>interestRate</th>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>How many years you are investing</td>
+                            <td>The initial amount</td>
+                            <td>The yearly interest rate of investment</td>
+                        </tr>
+                        <tr class="success">
+                            <th rowspan="2">Request I</th>
+                            <td>3</td>
+                            <td>100</td>
+                            <td>0.1</td>
+                        </tr>
+                        <tr class="success">
+                            <td colspan="3"><code>http://localhost:3000/api/investedAmount?years=3&initial=100&interestRate=0.1</code></td>
+                        </tr>
+                        <tr class="success">
+                            <th>Response I</th>
+                            <td colspan="3"><code>{"status":"success","result":121.00000000000003}</code></td>
+                        </tr>
+                        <tr class="danger">
+                            <th rowspan="2">Request II</th>
+                            <td>3</td>
+                            <td>100</td>
+                            <td>N/A</td>
+                        </tr>
+                        <tr class="danger">
+                            <td colspan="3"><code>http://localhost:3000/api/investedAmount?years=3&initial=100</code></td>
+                        </tr>
+                        <tr class="danger">
+                            <th>Response II</th>
+                            <td colspan="3"><code>{"status":"error","message":"You need provide all three parameters!"}</code></td>
+                        </tr>
+                    </table>
+                </section>
+                <section>
+                    <h3>3. <code>loanPayoff</code> API Route</h3>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Variables</th>
+                            <th>monthlyAmount</th>
+                            <th>loanAmount</th>
+                            <th>interestRate</th>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>Monthly payment amount</td>
+                            <td>The initial loan amount</td>
+                            <td>The yearly interest rate of load</td>
+                        </tr>
+                        <tr class="success">
+                            <th rowspan="2">Request I</th>
+                            <td>10</td>
+                            <td>250</td>
+                            <td>0.1</td>
+                        </tr>
+                        <tr class="success">
+                            <td colspan="3"><code>http://localhost:3000/api/loanPayoff?monthlyAmount=10&loanAmount=250&interestRate=0.1</code></td>
+                        </tr>
+                        <tr class="success">
+                            <th>Response I</th>
+                            <td colspan="3"><code>{"status":"success","result":29}</code></td>
+                        </tr>
+                        <tr class="danger">
+                            <th rowspan="2">Request II</th>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>-0.1</td>
+                        </tr>
+                        <tr class="danger">
+                            <td colspan="3"><code>http://localhost:3000/api/loanPayoff?monthlyAmount=10&loanAmount=250&interestRate=-0.1</code></td>
+                        </tr>
+                        <tr class="danger">
+                            <th>Response II</th>
+                            <td colspan="3"><code>{"status":"error","message":"Invalid parameter (yearlyInterestRateOfLoan)!"}</code></td>
+                        </tr>
+                    </table>
+                </section>
             </div>
         </div>
         <main>
