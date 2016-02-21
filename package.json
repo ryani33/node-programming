@@ -1,21 +1,21 @@
 {
-  "name": "cs-546-boilerplate",
+  "name": "cs-546-lab3-xiaoyu-zhai",
   "version": "1.0.0",
-  "description": "A boilerplate to use in CS-546 assignments; will be updated",
+  "description": "This is a project from Stevens CS546, to make a financial calculator",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Stevens-CS546/Boilerplate.git"
+    "url": "git+https://github.com/ryani33/financial-calculator.git"
   },
-  "author": "Phil Barresi",
+  "author": "Xiaoyu Zhai",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Stevens-CS546/Boilerplate/issues"
+    "url": "https://github.com/ryani33/financial-calculator/issues"
   },
-  "homepage": "https://github.com/Stevens-CS546/Boilerplate#readme",
+  "homepage": "https://github.com/ryani33/financial-calculator#readme",
   "dependencies": {
     "body-parser": "^1.14.2",
     "express": "^4.13.4",
