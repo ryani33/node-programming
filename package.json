@@ -1,7 +1,7 @@
 {
-  "name": "cs-546-lab3-xiaoyu-zhai",
+  "name": "cs-546-lab4-xiaoyu-zhai",
   "version": "1.0.0",
-  "description": "This is a project from Stevens CS546, to make a financial calculator",
+  "description": "This is a project from Stevens CS546, to make a financial calculator and display the results.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
