@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <div class="container">
+        <% include ../partials/header %>
+            <main>
+                <% if (todo.status === "completed") { %>
+                    <h2>
+                        <span class="badge">Completed</span> <%= todo.taskTitle %>
+                        <small>by <%= todo.author %></small>
+                    </h2>
+                <% } else { %>
+                    <h2>
+                        <span class="badge">Open</span> <%= todo.taskTitle %>
+                        <small>by <%= todo.author %></small>
+                    </h2>
+                <% } %>
+                <hr/>
+                <% if (todo.taskDescription) { %>
+                    <h3>Description</h3>
+                    <p><%= todo.taskDescription %></p>
+                <% } else { %>
+                    <h3>Description</h3>
+                    <p><i>No Description</i></p>
+                <% } %>
+                <% if (todo.taskNotes) { %>
+                    <h3>Notes</h3>
+                    <p><%= todo.taskNotes %></p>
+                <% } else { %>
+                    <h3>Notes</h3>
+                    <p><i>No Notes</i></p>
+                <% } %>
+                <% if (todo.status === "open") { %>
+                    <ul class="nav nav-tabs" style="margin-top:30px;">
+                        <li class="active"><a data-toggle="tab" href="#status">Status</a></li>
+                        <li><a data-toggle="tab" href="#addnotes">Add Notes</a></li>
+                        <li><a data-toggle="tab" href="#edit">Edit</a></li>
+                    </ul>
+
+                    <div class="tab-content" style="margin-top:10px;">
+                        <div id="status" class="tab-pane fade in active">
+                            <section class="complete-form">
+                                <% locals.todoToUpdate = todo; %>
+                                <% include ../partials/complete-form %>
+                            </section>
+                        </div>
+                        <div id="addnotes" class="tab-pane fade">
+                            <section class="notes-form">
+                                <% locals.todoToUpdate = todo; %>
+                                <% include ../partials/notes-form %>
+                            </section>
+                        </div>
+                        <div id="edit" class="tab-pane fade"> 
+                            <section class="todo-form">
+                                <% locals.todoToUpdate = todo; %>
+                                <% include ../partials/todo-form %>
+                            </section>  
+                        </div>
+                    </div>
+                <% } else { %>
+                    <ul class="nav nav-tabs" style="margin-top:30px;">
+                        <li class="active"><a data-toggle="tab" href="#addnotes">Add Notes</a></li>
+                        <li><a data-toggle="tab" href="#edit">Edit</a></li>
+                    </ul>
+
+                    <div class="tab-content" style="margin-top:10px;">
+                        <div id="addnotes" class="tab-pane fade in active">
+                            <section class="notes-form">
+                                <% locals.todoToUpdate = todo; %>
+                                <% include ../partials/notes-form %>
+                            </section>
+                        </div>
+                        <div id="edit" class="tab-pane fade"> 
+                            <section class="todo-form">
+                                <% locals.todoToUpdate = todo; %>
+                                <% include ../partials/todo-form %>
+                            </section>  
+                        </div>
+                    </div>
+                <% } %>
+            </main>
+    </div>
+
+    <% include ../partials/scripts %>
+</body>
+
+</html>

@@ -1,10 +1,12 @@
 // We first require our express package
 var express = require('express');
 var bodyParser = require('body-parser');
-var myData = require('./toDoEntries.js');
+var toDoEntries = require('./toDoEntries.js');
 
 // This package exports the function to create an express instance:
 var app = express();
+
+app.set('view engine', 'ejs');
 
 // This is called 'adding middleware', or things that will help parse your request
 app.use(bodyParser.json()); // for parsing application/json
@@ -15,59 +17,105 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 // it will check the 'static' folder for matching files 
 app.use('/assets', express.static('static'));
 
-// Setup your routes here!
-
-function respond_result(response, res) {
-    try {
-        response.json({status: "success", "result": res});
-    } catch (e) {
-        response.status(500).json({status: "error", "message": e});
+app.use(function (req, res, next) {
+    if (req.body && req.body._method) {
+        console.log(req.body);
+        req.method = req.body._method;
+        delete req.body._method;
     }
-}
 
+    // let the next middleware run:
+    next();
+});
+
+// Setup your routes here!
 app.get("/", function (request, response) { 
     // We have to pass a second parameter to specify the root directory
     // __dirname is a global variable representing the file directory you are currently in
-    response.sendFile("./pages/index.html", { root: __dirname });
+    response.redirect("/api/todo");
 });
 
-app.get("/api/perMonthRetirementSavings", function (request, response) { 
-    if (request.query.years && request.query.perMonth && request.query.interestRate) {
-    	try {
-	        var res = myData.retirementAmountIfSavingPerMonth(request.query.years, request.query.perMonth, request.query.interestRate);
-	        respond_result(response, res);
-	    } catch (e) {
-	        response.status(500).json({status: "error", "message": e});
-	    }
-    } else {
-    	response.status(500).json({status: "error", "message": "You need provide all three parameters!"});
+app.get("/api/todo/:id", function (request, response) {
+    try {
+        var todo = toDoEntries.getEntry(request.params.id);
+        // we caught an exception! Let's show an error page!
+        response.render('pages/todo', { todo: todo, pageTitle: todo.taskTitle });
+    } catch (message) {
+        // we caught an exception! Let's show an error page!
+        response.status(500).render('pages/error', { errorType: "Issue loading todo!", errorMessage: message });
     }
 });
 
-app.get("/api/investedAmount", function (request, response) { 
-    if (request.query.years && request.query.initial && request.query.interestRate) {
-        try {
-	        var res = myData.investedAmountAfterSomeYears(request.query.years, request.query.initial, request.query.interestRate);
-	        respond_result(response, res);
-	    } catch (e) {
-	        response.status(500).json({status: "error", "message": e});
-	    }
-    } else {
-    	response.status(500).json({status: "error", "message": "You need provide all three parameters!"});
+app.post("/api/todo", function (request, response) {
+    console.log("POSTING REQUEST WITH BODY OF:");
+    console.log(request.body);
+    try {
+        var todo = toDoEntries.addEntry(request.body.author, request.body.title, request.body.description, request.body.text, "open");
+        response.render('pages/todo', { todo: todo, pageTitle: todo.title });
+    } catch (message) {
+        // we caught an exception! Let's show an error page!
+        response.status(500).render('pages/error', { errorType: "Issue creating todo!", errorMessage: message });
     }
 });
 
-app.get("/api/loanPayoff", function (request, response) { 
-    if (request.query.monthlyAmount && request.query.loanAmount && request.query.interestRate) {
-        try {
-	        var res = myData.monthsToPayOffLoan(request.query.monthlyAmount, request.query.loanAmount, request.query.interestRate);
-	        respond_result(response, res);
-	    } catch (e) {
-	        response.status(500).json({status: "error", "message": e});
-	    }
-    } else {
-    	response.status(500).json({status: "error", "message": "You need provide all three parameters!"});
+app.post("/api/todo/:id/notes", function (request, response) {
+    try {
+        var todo = toDoEntries.addEntryNotes(request.params.id, request.body.text);
+        console.log(todo);
+        response.render('pages/todo', { todo: todo, pageTitle: todo.title });
+    } catch (message) {
+        // we caught an exception! Let's show an error page!
+        response.status(500).render('pages/error', { errorType: "Cannot add notes!", errorMessage: message });
     }
+});
+
+app.post("/api/todo/:id/complete", function (request, response) {
+    try {
+        var todo = toDoEntries.setCompletedEntry(request.params.id);
+        response.render('pages/todo', { todo: todo, pageTitle: todo.title });
+    } catch (message) {
+        // we caught an exception! Let's show an error page!
+        response.status(500).render('pages/error', { errorType: "Cannot complete todo!", errorMessage: message });
+    }
+});
+
+app.put("/api/todo/:id", function (request, response) {
+    console.log("PUTTING REQUEST WITH BODY OF:");
+    console.log(request.body);
+
+    try {
+        var todo = toDoEntries.updateEntry(request.params.id, request.body.author, request.body.title, request.body.description, request.body.radio);
+        // we caught an exception! Let's show an error page!
+        response.render('pages/todo', { todo: todo, pageTitle: todo.title });
+    } catch (message) {
+        // we caught an exception! Let's show an error page!
+        response.status(500).render('pages/error', { errorType: "Issue updating todo!", errorMessage: message });
+    }
+});
+
+app.get("/api/todo", function (request, response) {
+    // We have to pass a second parameter to specify the root directory
+    // __dirname is a global variable representing the file directory you are currently in
+    var todoType = request.query.type,
+        displayType = "",
+        todoToShow = [];
+
+    // First, we retrieve our data
+    if (todoType === "completed") {
+        displayType = "Completed Todos";
+        todoToShow = toDoEntries.getCompletedEntry();
+    } else if (todoType === "all") {
+        displayType = "All Todos";
+        todoToShow = toDoEntries.getAll();
+    } else {
+        displayType = "Open Todos";
+        todoToShow = toDoEntries.getOpenEntry();
+    }
+
+    // render will search your 'views' directory and follow the path you give it to get a template
+    // it will compile the template with the model you provide in the second parameter and
+    // send it to the user
+    response.render('pages/index', { todos: todoToShow, type: displayType, pageTitle: "Home", trueType: todoType});
 });
 
 
