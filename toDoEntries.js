@@ -84,20 +84,19 @@ entry_module.updateEntry = function (id, author, taskTitle, taskDescription, sta
     return todo;
 };
 
-entry_module.addEntryNotes = function (id, taskNotes) {
-    if (!taskNotes) {
+entry_module.addEntryNotes = function (id, notes) {
+    if (!notes) {
         throw "Must include notes";
     }
-
 	var todo = entry_module.getEntry(id);
-	todo.taskNotes = taskNotes;
+	todo.taskNotes.push(notes);
     return todo;
 };
 
 // Let's pre-seed with some data
-var firstTodo = entry_module.addEntry("Xiaoyu", "Boil water", "Help my mom to make dinner.",
-    "I promised my mom I would make dinner, and I don't know how to boil the water!", "open");
+var firstTodo = entry_module.addEntry("Xiaoyu", "Boil water", "Help my mom to make dinner.", 
+    ["I promised my mom I would make dinner, and I don't know how to boil the water!"], "open");
 var firstTodo = entry_module.addEntry("Xiaoyu", "Fix laptop", "My laptop is out of service.",
-    "Fix it on my own or send to retail store.", "open");
+    ["Fix it on my own or send to retail store."], "open");
 
 module.exports = entry_module;

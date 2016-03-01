@@ -50,7 +50,7 @@ app.post("/api/todo", function (request, response) {
     console.log("POSTING REQUEST WITH BODY OF:");
     console.log(request.body);
     try {
-        var todo = toDoEntries.addEntry(request.body.author, request.body.title, request.body.description, request.body.text, "open");
+        var todo = toDoEntries.addEntry(request.body.author, request.body.title, request.body.description, [], "open");
         response.render('pages/todo', { todo: todo, pageTitle: todo.title });
     } catch (message) {
         // we caught an exception! Let's show an error page!
@@ -61,7 +61,6 @@ app.post("/api/todo", function (request, response) {
 app.post("/api/todo/:id/notes", function (request, response) {
     try {
         var todo = toDoEntries.addEntryNotes(request.params.id, request.body.text);
-        console.log(todo);
         response.render('pages/todo', { todo: todo, pageTitle: todo.title });
     } catch (message) {
         // we caught an exception! Let's show an error page!
@@ -70,9 +69,29 @@ app.post("/api/todo/:id/notes", function (request, response) {
 });
 
 app.post("/api/todo/:id/complete", function (request, response) {
+    var fm = request.query.from;
     try {
         var todo = toDoEntries.setCompletedEntry(request.params.id);
-        response.render('pages/todo', { todo: todo, pageTitle: todo.title });
+        if (fm === "index") {
+            response.redirect("/api/todo/?type=all");
+        } else {
+            response.render('pages/todo', { todo: todo, pageTitle: todo.title });
+        }
+    } catch (message) {
+        // we caught an exception! Let's show an error page!
+        response.status(500).render('pages/error', { errorType: "Cannot complete todo!", errorMessage: message });
+    }
+});
+
+app.post("/api/todo/:id/open", function (request, response) {
+    var fm = request.query.from;
+    try {
+        var todo = toDoEntries.setOpenEntry(request.params.id);
+        if (fm === "index") {
+            response.redirect("/api/todo/?type=all");
+        } else {
+            response.render('pages/todo', { todo: todo, pageTitle: todo.title });
+        }
     } catch (message) {
         // we caught an exception! Let's show an error page!
         response.status(500).render('pages/error', { errorType: "Cannot complete todo!", errorMessage: message });

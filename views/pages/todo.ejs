@@ -28,9 +28,13 @@
                     <h3>Description</h3>
                     <p><i>No Description</i></p>
                 <% } %>
-                <% if (todo.taskNotes) { %>
+                <% if (todo.taskNotes.length > 0) { %>
                     <h3>Notes</h3>
-                    <p><%= todo.taskNotes %></p>
+                    <ul>
+                        <% for (index = 0; index < todo.taskNotes.length; ++index) { %>
+                            <li><%= todo.taskNotes[index] %></li>
+                        <% } %>
+                    </ul>
                 <% } else { %>
                     <h3>Notes</h3>
                     <p><i>No Notes</i></p>
