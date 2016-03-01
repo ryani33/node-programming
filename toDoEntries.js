@@ -3,11 +3,14 @@ var entry_module = {};
 var entryList = [];
 
 var makeAEntry = function (author, taskTitle, taskDescription, taskNotes, status) {
-    if (!author) {
-        throw "Must include a author";
+    if (!author || typeof author !== "string") {
+        throw 2;
     }
-    if (!taskTitle) {
-        throw "Must include a title";
+    if (!taskTitle || typeof taskTitle !== "string") {
+        throw 2;
+    }
+    if (!taskDescription || typeof taskDescription !== "string") {
+        throw 2;
     }
     return { id: entryList.length, author: author, taskTitle: taskTitle,
     	taskDescription: taskDescription, taskNotes: taskNotes, status: status};
@@ -19,10 +22,10 @@ entry_module.addEntry = function (author, taskTitle, taskDescription, taskNotes,
     return todo;
 };
 
-entry_module.deleteEntry = function () {
+entry_module.deleteEntry = function (id) {
     var todo = entry_module.getEntry(id);
     var indexOfTodo = entryList.indexOf(todo);
-    todo.splice(indexOfTodo, 1);
+    delete entryList[indexOfTodo];
 };
 
 entry_module.setOpenEntry = function (id) {
@@ -52,13 +55,13 @@ entry_module.getCompletedEntry = function () {
 entry_module.getEntry = function (id) {
     if (typeof id === "string") id = parseInt(id);
 
-    if (id !== 0 && !id) throw "Must provide ID";
+    if (id !== 0 && !id) throw 1;
 
     var todo = entryList.filter(function (todo) {
         return todo.id === id;
     }).shift();
 
-    if (!todo) throw "Could not find todo entry";
+    if (!todo) throw 1;
 
     return todo;
 };
@@ -67,16 +70,15 @@ entry_module.getAll = function () {
     return entryList.slice(0);
 };
 
-entry_module.updateEntry = function (id, author, taskTitle, taskDescription, status) {
-    if (!author) {
-        throw "Must include a author";
+entry_module.updateEntry = function (id, taskTitle, taskDescription, status) {
+    if (!taskTitle || typeof taskTitle !== "string") {
+        throw 2;
     }
-    if (!taskTitle) {
-        throw "Must include a title";
+    if (!taskDescription || typeof taskDescription !== "string") {
+        throw 2;
     }
     
     var todo = entry_module.getEntry(id);
-    todo.author = author;
     todo.taskTitle = taskTitle;
     todo.taskDescription = taskDescription;
     todo.status = status;
@@ -86,7 +88,7 @@ entry_module.updateEntry = function (id, author, taskTitle, taskDescription, sta
 
 entry_module.addEntryNotes = function (id, notes) {
     if (!notes) {
-        throw "Must include notes";
+        throw 2;
     }
 	var todo = entry_module.getEntry(id);
 	todo.taskNotes.push(notes);
