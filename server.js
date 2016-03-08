@@ -76,30 +76,22 @@ app.post("/results/perMonthRetirementSavings", function (request, response) {
 });
 
 app.post("/results/investedAmount", function (request, response) { 
-    if (request.body.param1 && request.body.param2 && request.body.param3) {
-        try {
-            var res = myData.investedAmountAfterSomeYears(request.body.param1, request.body.param2, request.body.param3);
-            response.render('pages/result', { operationTitle: "Invested Amount", result: res,
-                type: 2, param1: request.body.param1, param2:request.body.param2, param3:request.body.param3});
-        } catch (e) {
-            response.status(500).render('pages/error', { error: e});
-        }
-    } else {
-        response.status(500).render('pages/error', { error: "You need provide all three parameters!"});
+    try {
+        var res = myData.investedAmountAfterSomeYears(request.body.param1, request.body.param2, request.body.param3);
+        response.render('pages/result', { operationTitle: "Invested Amount", result: res,
+            type: 2, param1: request.body.param1, param2:request.body.param2, param3:request.body.param3});
+    } catch (e) {
+        response.status(500).render('pages/error', { error: e});
     }
 });
 
 app.post("/results/loanPayoff", function (request, response) { 
-    if (request.body.param1 && request.body.param2 && request.body.param3) {
-        try {
-            var res = myData.monthsToPayOffLoan(request.body.param1, request.body.param2, request.body.param3);
-            response.render('pages/result', { operationTitle: "Loan Payoff", result: res,
-                type: 3, param1: request.body.param1, param2:request.body.param2, param3:request.body.param3});
-        } catch (e) {
-            response.status(500).render('pages/error', { error: e});
-        }
-    } else {
-        response.status(500).render('pages/error', { error: "You need provide all three parameters!"});
+    try {
+        var res = myData.monthsToPayOffLoan(request.body.param1, request.body.param2, request.body.param3);
+        response.render('pages/result', { operationTitle: "Loan Payoff", result: res,
+            type: 3, param1: request.body.param1, param2:request.body.param2, param3:request.body.param3});
+    } catch (e) {
+        response.status(500).render('pages/error', { error: e});
     }
 });
 

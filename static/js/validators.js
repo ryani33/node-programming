@@ -22,9 +22,15 @@
             throw "No thrid value provided";
         }
 
-        var firstNumber = parseInt(firstValue);
-        var secondNumber = parseInt(secondValue);
-        var thirdNumber = parseInt(thirdValue);
+        var firstNumber = parseFloat(firstValue);
+        var secondNumber = parseFloat(secondValue);
+        var thirdNumber = 0;
+        if (thirdValue[thirdValue.length - 1] === '%') {
+            thirdValue = thirdValue.substring(0, thirdValue.length - 1);
+            thirdNumber = parseFloat(thirdValue) * 0.01;
+        } else {
+            thirdNumber = parseFloat(thirdValue);
+        }
 
         if (isNaN(firstNumber)) {
             throw "First value is not a number";
@@ -43,19 +49,24 @@
         }
 
         if (isNaN(thirdNumber)) {
-            throw "Third value is not a number";
+            throw "Third value is not a number nor a percentage";
         }
 
         if (thirdNumber < 0) {
             throw "Third value must be greater than 0";
         }
+
+        return {firstNumber: firstNumber, secondNumber: secondNumber, thirdNumber: thirdNumber};
     }
 
     calculateForm.submit(function (event) {
         errorAlert.addClass('hidden');
         errorAlert.text('');
         try {
-            extractInputs();
+            var numbers = extractInputs();
+            firstInput.val(numbers.firstNumber);
+            secondInput.val(numbers.secondNumber);
+            thirdInput.val(numbers.thirdNumber);
         } catch (error) {
             event.preventDefault();
             errorAlert.text(error);
