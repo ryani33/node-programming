@@ -1,12 +1,21 @@
 (function ($) {
+    var firstInputOne = $("#param11");
+    var secondInputOne = $("#param12");
+    var thirdInputOne = $("#param13");
+    var errorAlertOne = $("#calculator-error-1");
+    var calculateFormOne = $("#calculate-form-1");
+    var firstInputTwo = $("#param21");
+    var secondInputTwo = $("#param22");
+    var thirdInputTwo = $("#param23");
+    var errorAlertTwo = $("#calculator-error-2");
+    var calculateFormTwo = $("#calculate-form-2");
+    var firstInputThree = $("#param31");
+    var secondInputThree = $("#param32");
+    var thirdInputThree = $("#param33");
+    var errorAlertThree = $("#calculator-error-3");
+    var calculateFormThree = $("#calculate-form-3");
 
-    var firstInput = $("#param1");
-    var secondInput = $("#param2");
-    var thirdInput = $("#param3");
-    var errorAlert = $("#calculator-error");
-    var calculateForm = $("#calculate-form");
-
-    function extractInputs() {
+    function extractInputs(firstInput, secondInput, thirdInput) {
         var firstValue = firstInput.val();
         if (firstValue === undefined || firstValue === "" || firstValue === null) {
             throw "No first value provided";
@@ -27,7 +36,11 @@
         var thirdNumber = 0;
         if (thirdValue[thirdValue.length - 1] === '%') {
             thirdValue = thirdValue.substring(0, thirdValue.length - 1);
-            thirdNumber = parseFloat(thirdValue) * 0.01;
+            thirdNumber = parseFloat(thirdValue);
+            if (isNaN(thirdNumber)) {
+                throw "Third value is not a number nor a percentage";
+            }
+            thirdNumber = thirdNumber * 0.01;
         } else {
             thirdNumber = parseFloat(thirdValue);
         }
@@ -59,18 +72,48 @@
         return {firstNumber: firstNumber, secondNumber: secondNumber, thirdNumber: thirdNumber};
     }
 
-    calculateForm.submit(function (event) {
-        errorAlert.addClass('hidden');
-        errorAlert.text('');
+    calculateFormOne.submit(function (event) {
+        errorAlertOne.addClass('hidden');
+        errorAlertOne.text('');
         try {
-            var numbers = extractInputs();
-            firstInput.val(numbers.firstNumber);
-            secondInput.val(numbers.secondNumber);
-            thirdInput.val(numbers.thirdNumber);
+            var numbers = extractInputs(firstInputOne, secondInputOne, thirdInputOne);
+            firstInputOne.val(numbers.firstNumber);
+            secondInputOne.val(numbers.secondNumber);
+            thirdInputOne.val(numbers.thirdNumber);
         } catch (error) {
             event.preventDefault();
-            errorAlert.text(error);
-            errorAlert.removeClass('hidden');
+            errorAlertOne.text(error);
+            errorAlertOne.removeClass('hidden');
+        }
+    });
+
+    calculateFormTwo.submit(function (event) {
+        errorAlertTwo.addClass('hidden');
+        errorAlertTwo.text('');
+        try {
+            var numbers = extractInputs(firstInputTwo, secondInputTwo, thirdInputTwo);
+            firstInputTwo.val(numbers.firstNumber);
+            secondInputTwo.val(numbers.secondNumber);
+            thirdInputTwo.val(numbers.thirdNumber);
+        } catch (error) {
+            event.preventDefault();
+            errorAlertTwo.text(error);
+            errorAlertTwo.removeClass('hidden');
+        }
+    });
+
+    calculateFormThree.submit(function (event) {
+        errorAlertThree.addClass('hidden');
+        errorAlertThree.text('');
+        try {
+            var numbers = extractInputs(firstInputThree, secondInputThree, thirdInputThree);
+            firstInputThree.val(numbers.firstNumber);
+            secondInputThree.val(numbers.secondNumber);
+            thirdInputThree.val(numbers.thirdNumber);
+        } catch (error) {
+            event.preventDefault();
+            errorAlertThree.text(error);
+            errorAlertThree.removeClass('hidden');
         }
     });
 
