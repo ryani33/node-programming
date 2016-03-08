@@ -23,10 +23,6 @@ app.get("/", function (request, response) {
     response.render('pages/index');
 });
 
-app.get("/calculate", function (request, response) { 
-    response.render('pages/calculate');
-});
-
 app.get("/api/perMonthRetirementSavings", function (request, response) { 
     if (request.query.years && request.query.perMonth && request.query.interestRate) {
     	try {
@@ -70,16 +66,12 @@ app.get("/api/loanPayoff", function (request, response) {
 });
 
 app.post("/results/perMonthRetirementSavings", function (request, response) { 
-    if (request.body.param1 && request.body.param2 && request.body.param3) {
-        try {
-            var res = myData.retirementAmountIfSavingPerMonth(request.body.param1, request.body.param2, request.body.param3);
-            response.render('pages/result', { operationTitle: "Monthly Retirement Savings", result: res,
-                type: 1, param1: request.body.param1, param2:request.body.param2, param3:request.body.param3});
-        } catch (e) {
-            response.status(500).render('pages/error', { error: e});
-        }
-    } else {
-        response.status(500).render('pages/error', { error: "You need provide all three parameters!"});
+    try {
+        var res = myData.retirementAmountIfSavingPerMonth(request.body.param1, request.body.param2, request.body.param3);
+        response.render('pages/result', { operationTitle: "Monthly Retirement Savings", result: res,
+            type: 1, param1: request.body.param1, param2:request.body.param2, param3:request.body.param3});
+    } catch (e) {
+        response.status(500).render('pages/error', { error: e});
     }
 });
 

@@ -2,13 +2,13 @@
         <div class="col-md-6">
             <% if (locals.formType === "retire") { %>
                 <h3>Calculate Monthly Retirement Savings</h3>
-                <form action="/results/perMonthRetirementSavings" method="POST" class="form-horizontal">
+                <form action="/results/perMonthRetirementSavings" method="POST" class="form-horizontal" id="calculate-form">
             <% } else if (locals.formType === "invest") { %>
                 <h3>Calculate Invested Amount</h3>
-                <form action="/results/investedAmount" method="POST" class="form-horizontal">
+                <form action="/results/investedAmount" method="POST" class="form-horizontal" id="calculate-form">
             <% } else if (locals.formType === "loan") { %>
                 <h3>Calculate Loan Payoff</h3>
-                <form action="/results/loanPayoff" method="POST" class="form-horizontal">
+                <form action="/results/loanPayoff" method="POST" class="form-horizontal" id="calculate-form">
             <% } %>
                 <div class="form-group">
                     <% if (locals.formType === "retire") { %>
@@ -67,7 +67,10 @@
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-default col-md-offset-3" style="margin-bottom:20px;">Submit</button>
+                <button type="submit" class="btn btn-default col-md-offset-3" style="margin-bottom:20px;" id="submit">
+                Submit</button>
             </form>
+            <div class="alert alert-danger calculator-alerts hidden" id="calculator-error">
+            </div>
         </div>
 </div>

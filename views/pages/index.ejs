@@ -10,6 +10,15 @@
         <% include ../partials/header %>
         <main>
             <section>
+                <h2>
+                    
+                    Let's Calculate
+                    <span class="glyphicon glyphicon-hand-down"></span>
+                </h2>
+                <% include ../partials/calculate %>
+            </section>
+            <hr />
+            <section>
                 <h2>About Xiaoyu Zhai</h2>
                 <p>I love creating cool stuff, especially mobile and web apps.</p>
                 <ul>
@@ -161,17 +170,7 @@
             </section>
         </main>
     </div>
-
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <!-- jQuery fallback -->
-    <script>
-        if (!window.jQuery) { document.write('<script src="/assets/js/jquery.js"><\/script>'); }
-    </script>
-
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="/assets/js/bootstrap.min.js"></script>
+    <% include ../partials/scripts %>
 </body>
 
 </html>

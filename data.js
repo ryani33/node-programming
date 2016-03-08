@@ -1,16 +1,6 @@
 var data_module = {};
 
 data_module.retirementAmountIfSavingPerMonth = function (yearsUntilRetirement, amountSavingPerMonth, yearlyInterestRateOfInvestment) {
-	if (yearsUntilRetirement <= 0 || isNaN(yearsUntilRetirement)) {
-    	throw "Invalid parameter (yearsUntilRetirement)!";
-    }
-    if (amountSavingPerMonth <= 0 || isNaN(amountSavingPerMonth)) {
-    	throw "Invalid parameter (amountSavingPerMonth)!";
-    }
-    if (yearlyInterestRateOfInvestment < 0 || isNaN(yearlyInterestRateOfInvestment)) {
-    	throw "Invalid parameter (yearlyInterestRateOfInvestment)!";
-    }
-
     var runningTotal = 0;
 
     for (var i = 0; i < Number(yearsUntilRetirement) * 12; i ++) {
