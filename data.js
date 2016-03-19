@@ -17,7 +17,7 @@ MongoClient.connect(fullMongoUrl)
 
         // setup your body
         exports.createComment = function(comment) {
-            if (!comment)  Promise.reject("You must provide a comment");
+            if (!comment) return Promise.reject("You must provide a comment");
 
             // return a promise that resolves the new comment
             return myCollection.insertOne({ _id: Guid.create().toString(), comment: comment }).then(function(newDoc) {
