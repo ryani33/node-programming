@@ -20,21 +20,26 @@ app.use('/assets', express.static('static'));
 
 app.post("/", function(request, response) {
     var comment = request.body.comment;
-
-    // In this route, you will call the createComment function for your data module
-    // and respond with the result of that promise            
-        // On error, do: 
-        // response.render("pages/home", { error: null, comments: ALL THE COMMENTS });
-
-        // On success, do:
+    commentData.createComment(comment).then(function() {
         response.redirect("/");
+    }, function(errorMessage) {
+        response.status(500).json({ error: errorMessage });
+    });
 });
 
 app.get("/", function(request, response) {
     // In this route, you will call the getAllComments function for your data module
     // and respond with the result of that promise as your comments section
+    commentData.getAllComments().then(function(commentList) {
+        response.render("pages/home", { error: null, comments: commentList });
+    });
+});
 
-    response.render("pages/home", { error: null, comments: [] });
+app.get("/all", function(request, response) {
+    //respond with the result of json
+    commentData.getAllComments().then(function(commentList) {
+        response.json(commentList);
+    });
 });
 
 // We can now navigate to localhost:3000
