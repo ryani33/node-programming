@@ -1,33 +1,31 @@
 var MongoClient = require('mongodb').MongoClient,
-    runStartup = require("./startup.js"),
     settings = require('./config.js'),
     Guid = require('Guid');
 
 var fullMongoUrl = settings.mongoConfig.serverUrl + settings.mongoConfig.database;
 var exports = module.exports = {};
 
-runStartup().then(function(allComments) {
-    console.log("After the setup has been complete, we have the following comments:");
-    console.log(allComments);
-});
-
 MongoClient.connect(fullMongoUrl)
     .then(function(db) {
-        var myCollection = db.collection("comments");
+        db.createCollection("logs");
+        var myCollection = db.collection("logs");
 
         // setup your body
-        exports.createComment = function(comment) {
-            if (!comment) return Promise.reject("You must provide a comment");
+        exports.createLog = function(requestPath, requestMethod, cookies, timestamp) {
+            if (!requestPath) return Promise.reject("Request path error");
+            if (!requestMethod) return Promise.reject("Request method error");
+            if (!cookies) return Promise.reject("Cookies error");
+            if (!timestamp) return Promise.reject("Timestamp error");
 
-            // return a promise that resolves the new comment
-            return myCollection.insertOne({ _id: Guid.create().toString(), comment: comment }).then(function(newDoc) {
+            // return a promise that resolves the new log
+            return myCollection.insertOne({ _id: Guid.create().toString(), requestPath: requestPath, 
+                requestMethod: requestMethod, cookies: cookies, timestamp: timestamp}).then(function(newDoc) {
                 return newDoc.insertedId;
             });
         };
 
-        exports.getAllComments = function() {
-            // write the body here
-            // return a promise that resolves to all the comments in your collection.
+        exports.getAllLogs = function() {
+            // return a promise that resolves to all the logs in your collection.
             return myCollection.find().toArray();
         }
     });

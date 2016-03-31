@@ -1,45 +1,47 @@
 // We first require our express package
 var express = require('express');
 var bodyParser = require('body-parser');
-var commentData = require('./data.js');
+var cookieParser = require('cookie-parser');
+var logData = require('./data.js');
 
 // This package exports the function to create an express instance:
 var app = express();
 
-// We can setup Jade now!
-app.set('view engine', 'ejs');
-
-// This is called 'adding middleware', or things that will help parse your request
+app.use(cookieParser());
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-// This middleware will activate for every request we make to 
-// any path starting with /assets;
-// it will check the 'static' folder for matching files 
-app.use('/assets', express.static('static'));
+app.use("/api", function(request, response, next) {
+    var requestPath = request.path;
+    var requestMethod = request.method;
+    var cookies = request.cookies;
+    var timestamp = new Date();
 
-app.post("/", function(request, response) {
-    var comment = request.body.comment;
-    commentData.createComment(comment).then(function() {
-        response.redirect("/");
+    logData.createLog(requestPath, requestMethod, cookies, timestamp.toString()).then(function() {
+        response.status(200).send("New log created");
     }, function(errorMessage) {
         response.status(500).json({ error: errorMessage });
     });
 });
 
-app.get("/", function(request, response) {
-    // In this route, you will call the getAllComments function for your data module
-    // and respond with the result of that promise as your comments section
-    commentData.getAllComments().then(function(commentList) {
-        response.render("pages/home", { error: null, comments: commentList });
-    });
+app.get("/cookies/addCookie", function(request, response) {
+    if (!request.query.key || typeof request.query.key !== "string" ||
+        !request.query.value || typeof request.query.value !== "string") {
+        response.status(500).send("You need provide the key and the value");
+    } else {
+        if (request.cookies) {
+            for (key in Object.keys(request.cookies)) {
+                response.clearCookie(Object.keys(request.cookies)[key]);
+            }
+            response.cookie(request.query.key, request.query.value);
+        } else {
+            response.cookie(request.query.key, request.query.value);
+        }
+        response.status(200).send("This succeeded");
+    }
 });
 
-app.get("/all", function(request, response) {
-    //respond with the result of json
-    commentData.getAllComments().then(function(commentList) {
-        response.json(commentList);
-    });
+app.get("/", function(request, response) {
+    response.status(200).send("<html><a href=\"/cookies/addCookie\">add cookies</a><br /><a href=\"/api\">save log</a></html>");
 });
 
 // We can now navigate to localhost:3000

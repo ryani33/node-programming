@@ -1,23 +1,24 @@
 {
-  "name": "cs-546-lab7-xiaoyu-zhai",
+  "name": "cs-546-lab8-xiaoyu-zhai",
   "version": "1.0.0",
-  "description": "This is a project from Stevens CS546, to make MongoDB work.",
+  "description": "This is a project from Stevens CS546, to design Request Logger Middleware.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryani33/storing-comments-in-mongodb.git"
+    "url": "git+https://github.com/ryani33/request-logger-middleware.git"
   },
   "author": "Xiaoyu Zhai",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ryani33/storing-comments-in-mongodb/issues"
+    "url": "https://github.com/ryani33/request-logger-middleware/issues"
   },
-  "homepage": "https://github.com/ryani33/storing-comments-in-mongodb#readme",
+  "homepage": "https://github.com/ryani33/request-logger-middleware#readme",
   "dependencies": {
     "body-parser": "^1.14.2",
+    "cookie-parser": "^1.4.1",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
     "guid": "0.0.12",
