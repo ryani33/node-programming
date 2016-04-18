@@ -7,5 +7,15 @@
 
         $(".chapter.active").removeClass("active");
         chapterTarget.addClass("active");   
-    })
+    });
+    
+    $(document).ready(function() {
+        $('.chapter').hover( function() {
+                $(".chapter.active").removeClass("active");
+                $(this).addClass("active");  
+            }, function() {
+                ;
+            }
+        );
+    });
 })(jQuery);

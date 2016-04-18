@@ -65,4 +65,49 @@ a {
  }
  
  /* Solution */
- 
+.chapter p:first-of-type:first-letter {
+	font-size: 2rem;
+    font-family: cursive;
+} 
+
+.chapter p:first-of-type:first-line {
+	font-size: 1.5rem;
+}
+
+::selection {
+  background: #44609D;
+  color: #FFF;
+}
+
+::-moz-selection {
+  background: #44609D;
+  color: #FFF;
+}
+
+@media(min-width: 750px) {
+    nav > ul > li:hover{
+        font-size: 1.5rem;
+    }
+    
+    nav > ul > li {
+        transition: font-size .5s linear;
+    }
+    
+    html {
+        font-size: 18pt;
+    }
+    
+    .content {
+        margin: auto;
+        width: 75%;
+    }
+    
+    .chapter {
+        opacity: 0.75;
+        transition: opacity .5s linear;
+    }
+    
+    .chapter:hover {
+        opacity: 1;
+    }
+}
