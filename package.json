@@ -1,0 +1,24 @@
+{
+  "name": "cs-546-lab10-xiaoyu-zhai",
+  "version": "1.0.0",
+  "description": "This is a project from Stevens CS546, to work with Twitter Bootstrap.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryani33/twitter-bootstrap.git"
+  },
+  "author": "Xiaoyu Zhai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryani33/twitter-bootstrap/issues"
+  },
+  "homepage": "https://github.com/ryani33/twitter-bootstrap#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "ejs": "^2.4.1"
+  }
+}
