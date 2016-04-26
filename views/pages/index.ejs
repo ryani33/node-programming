@@ -5,20 +5,24 @@
     <% include ../partials/head %>
 </head>
 
-<body>
+<body data-spy="scroll" data-target=".navbar">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a href="#calculate">Calculate</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#howto">Howto</a></li>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <% include ../partials/header %>
         <main>
-            <section>
-                <h2>
-                    
-                    Let's Calculate
-                    <span class="glyphicon glyphicon-hand-down"></span>
-                </h2>
+            <section style="padding-top: 40px; margin-top: -40px;" id="calculate">
                 <% include ../partials/calculate %>
             </section>
             <hr />
-            <section>
+            <section style="padding-top: 40px; margin-top: -40px;" id="about">
                 <h2>About Xiaoyu Zhai</h2>
                 <p>I love creating cool stuff, especially mobile and web apps.</p>
                 <ul>
@@ -31,11 +35,12 @@
                 <h2>What is FC API</h2>
                 <p>I provide 3 calculate funcs in this website, which are all related to our financial life. The first one is to calculate the amount of money you will have in your <strong>retirement fund</strong>. The second one is to calculate the end result of a sum of money that you <strong>invested</strong>. The last one is to calculate how many months it will take to <strong>pay off a loan</strong>.</p>
             </section>
-            <section>
+            <hr />
+            <section style="padding-top: 40px; margin-top: -40px;" id="howto">
                 <h2>How to use this Financial Calculator</h2>
                 <ul>
                     <li>You can type <code>http://localhost:3000/api/perMonthRetirementSavings?years=3&perMonth=5&interestRate=0.1</code> in your browser, and get results.</li>
-                    <li>You can go to <a href="/calculate">this link</a> to submit your forms.</li>
+                    <li>You can submit your forms on this page.</li>
                 </ul>
             </section>
             <section>

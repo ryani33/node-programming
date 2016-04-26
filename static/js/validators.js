@@ -14,6 +14,8 @@
     var thirdInputThree = $("#param33");
     var errorAlertThree = $("#calculator-error-3");
     var calculateFormThree = $("#calculate-form-3");
+    
+    var dismissible = '<button class="close"><span aria-hidden="true">&times;</span></button>';
 
     function extractInputs(firstInput, secondInput, thirdInput) {
         var firstValue = firstInput.val();
@@ -83,7 +85,11 @@
         } catch (error) {
             event.preventDefault();
             errorAlertOne.text(error);
+            errorAlertOne.append(dismissible);
             errorAlertOne.removeClass('hidden');
+            $( ".close" ).click(function() {
+                errorAlertOne.addClass('hidden');
+            });
         }
     });
 
@@ -98,7 +104,11 @@
         } catch (error) {
             event.preventDefault();
             errorAlertTwo.text(error);
+            errorAlertTwo.append(dismissible);
             errorAlertTwo.removeClass('hidden');
+            $( ".close" ).click(function() {
+                errorAlertTwo.addClass('hidden');
+            });
         }
     });
 
@@ -113,7 +123,11 @@
         } catch (error) {
             event.preventDefault();
             errorAlertThree.text(error);
+            errorAlertThree.append(dismissible);
             errorAlertThree.removeClass('hidden');
+            $( ".close" ).click(function() {
+                errorAlertThree.addClass('hidden');
+            });
         }
     });
 
