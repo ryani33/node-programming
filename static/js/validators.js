@@ -130,5 +130,15 @@
             });
         }
     });
+    
+    $('#param11').tooltip({'trigger':'focus', 'title': 'This field you can input the time duration, which is determined by how long will you work before retirement', 'placement': 'right'});
+    $('#param12').tooltip({'trigger':'focus', 'title': 'This field you can input the money amount you will save per month', 'placement': 'right'});
+    $('#param13').tooltip({'trigger':'focus', 'title': 'This field you can input the yearly interest rate of investment', 'placement': 'right'});
+    $('#param21').tooltip({'trigger':'focus', 'title': 'This field you can input the time duration, which is determined by how many years you are investing', 'placement': 'right'});
+    $('#param22').tooltip({'trigger':'focus', 'title': 'This field you can input the initial investment amount', 'placement': 'right'});
+    $('#param23').tooltip({'trigger':'focus', 'title': 'This field you can input the yearly interest rate of investment', 'placement': 'right'});
+    $('#param31').tooltip({'trigger':'focus', 'title': 'This field you can input the monthly payment amount', 'placement': 'right'});
+    $('#param32').tooltip({'trigger':'focus', 'title': 'This field you can input the initial loan amount', 'placement': 'right'});
+    $('#param33').tooltip({'trigger':'focus', 'title': 'This field you can input the yearly interest rate of loan', 'placement': 'right'});
 
 })(jQuery);
