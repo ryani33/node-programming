@@ -18,7 +18,9 @@
   "homepage": "https://github.com/ryani33/twitter-bootstrap#readme",
   "dependencies": {
     "body-parser": "^1.14.2",
+    "ejs": "^2.4.1",
     "express": "^4.13.4",
-    "ejs": "^2.4.1"
+    "jquery": "^2.2.3",
+    "jsdom": "^8.4.0"
   }
 }

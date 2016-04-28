@@ -78,10 +78,19 @@
         errorAlertOne.addClass('hidden');
         errorAlertOne.text('');
         try {
+            event.preventDefault();
             var numbers = extractInputs(firstInputOne, secondInputOne, thirdInputOne);
-            firstInputOne.val(numbers.firstNumber);
-            secondInputOne.val(numbers.secondNumber);
-            thirdInputOne.val(numbers.thirdNumber);
+            var link = "/api/perMonthRetirementSavings?years=" + numbers.firstNumber + "&perMonth=" + numbers.secondNumber + "&interestRate=" + numbers.thirdNumber;
+            $.get(link, function( data ) {
+                 var obj = JSON.parse(data);
+                 $(".successTitle").text(obj.operationTitle);
+                 $(".totalOneTwo").text(obj.result + " dollars");
+                 var str = Math.round(obj.result * 100) / 100;
+                 $(".totalOneTwoRound").text(str + " (Rounded) dollars");
+                 $(".resultOneTwo").show();
+                 $(".resultThree").hide();
+            });
+            $('#resultModal').modal('show');
         } catch (error) {
             event.preventDefault();
             errorAlertOne.text(error);
@@ -97,10 +106,19 @@
         errorAlertTwo.addClass('hidden');
         errorAlertTwo.text('');
         try {
+            event.preventDefault();
             var numbers = extractInputs(firstInputTwo, secondInputTwo, thirdInputTwo);
-            firstInputTwo.val(numbers.firstNumber);
-            secondInputTwo.val(numbers.secondNumber);
-            thirdInputTwo.val(numbers.thirdNumber);
+            var link = "api/investedAmount?years=" + numbers.firstNumber + "&initial=" + numbers.secondNumber + "&interestRate=" + numbers.thirdNumber;
+            $.get(link, function( data ) {
+                 var obj = JSON.parse(data);
+                 $(".successTitle").text(obj.operationTitle);
+                 $(".totalOneTwo").text(obj.result + " dollars");
+                 var str = Math.round(obj.result * 100) / 100;
+                 $(".totalOneTwoRound").text(str + " (Rounded) dollars");
+                 $(".resultOneTwo").show();
+                 $(".resultThree").hide();
+            });
+            $('#resultModal').modal('show');
         } catch (error) {
             event.preventDefault();
             errorAlertTwo.text(error);
@@ -116,10 +134,19 @@
         errorAlertThree.addClass('hidden');
         errorAlertThree.text('');
         try {
+            event.preventDefault();
             var numbers = extractInputs(firstInputThree, secondInputThree, thirdInputThree);
-            firstInputThree.val(numbers.firstNumber);
-            secondInputThree.val(numbers.secondNumber);
-            thirdInputThree.val(numbers.thirdNumber);
+            var link = "api/loanPayoff?monthlyAmount=" + numbers.firstNumber + "&loanAmount=" + numbers.secondNumber + "&interestRate=" + numbers.thirdNumber;
+            $.get(link, function( data ) {
+                 var obj = JSON.parse(data);
+                 $(".successTitle").text(obj.operationTitle);
+                 $(".totalThree").text(obj.result + " month(s)");
+                 var str = Math.round(obj.result * 100) / 100;
+                 $(".totalThreeRound").text(str + " (Rounded) month(s)");
+                 $(".resultThree").show();
+                 $(".resultOneTwo").hide();
+            });
+            $('#resultModal').modal('show');
         } catch (error) {
             event.preventDefault();
             errorAlertThree.text(error);
