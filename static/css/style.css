@@ -1,0 +1,17 @@
+body {
+  position: relative;
+}
+
+.tooltip-inner {
+    width: 700px;
+}
+
+.scroll-fix {
+    padding-top: 40px;
+    margin-top: -40px;
+}
+.jumbotron {
+    background-color: #f9f9f9;
+    border: 1px solid #e8e8e8;
+}
+
