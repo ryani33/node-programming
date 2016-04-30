@@ -6,38 +6,54 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a id="all-trigger" href="#">All Movies</a></li>
+                <li><a id="popular-trigger" href="#">Most Popular Movies</a></li>
+            </ul>
+        </div>
+    </nav>
     <% include ../partials/header %>
     <div class="container">
         <main class="row">
-            <section class="col-sm-6">
-                <h2>Sign in</h2>
-                <hr />
-                <form action="/login" method="POST" class="form-horizontal">
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="loginname">Username</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="loginname" class="form-control" id="loginname"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="loginpwd">Password</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="loginpwd" class="form-control" id="loginpwd"/>
-                        </div>
-                    </div>
-                    <% if (loginError) { %>
-                        <div class="alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <%= loginError %>
-                        </div>
+            <section class="col-md-8">
+                <div class="entry-content" id="all">
+                    <h2><span class="glyphicon glyphicon-film" aria-hidden="true"></span> All Movies</h2>
+                    <hr />
+                    <% if (all !== null) { %>
+                        <% for (var i in all) { %>
+                            <div class="entry_single">
+                                <div class="col-md-8">
+                                    <span class="badge"><%= Number(i)+1 %></span>
+                                    <%= all[i].title %>
+                                </div>
+                                <div class="col-md-4">
+                                    <%= all[i].rating %>
+                                </div>
+                            </div>
+                        <% } %>
                     <% } %>
-                    <button type="submit" class="btn btn-default col-sm-offset-3" style="margin-top: 10px">Sign in
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                    </button>
-                </form>
+                    
+                </div>
+                <div class="entry-content hidden" id="popular">
+                    <h2><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Most Popular Movies</h2>
+                    <hr />
+                    <ul>
+                        <% if (popular !== null) { %>
+                            <% for (var i in popular) { %>
+                                <div class="entry_single">
+                                    <%= popular[i].title %>
+                                </div>
+                            <% } %>
+                        <% } %>
+                    </ul>
+                </div>
+                
+                
             </section>
-            <section class="col-sm-6">
-                <h2>Join</h2>
+            <section class="col-md-4">
+                <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a movie</h2>
                 <hr />
                 <form action="/signup" method="POST" class="form-horizontal">
                     <div class="form-group">
@@ -58,10 +74,15 @@
                             <input type="text" name="confirmpwd" class="form-control" id="confirmpwd"/>
                         </div>
                     </div>
-                    <% if (signupError) { %>
+                    <% if (createError) { %>
                         <div class="alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                            <%= signupError %>
+                            <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                            <%= createError %>
+                        </div>
+                    <% } else if (createSuccess) { %>
+                        <div class="alert alert-success" role="alert">
+                            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                            <%= createSuccess %>
                         </div>
                     <% } %>
                     <button type="submit" class="btn btn-default col-sm-offset-3" style="margin-top: 10px">Create Account
