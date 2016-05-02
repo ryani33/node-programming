@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <% include ../partials/head %>
 </head>
@@ -18,74 +17,107 @@
     <div class="container">
         <main class="row">
             <section class="col-md-8">
-                <div class="entry-content" id="all">
+                <div class="entry-header" id="all">
                     <h2><span class="glyphicon glyphicon-film" aria-hidden="true"></span> All Movies</h2>
                     <hr />
-                    <% if (all !== null) { %>
-                        <% for (var i in all) { %>
-                            <div class="entry_single">
-                                <div class="col-md-8">
-                                    <span class="badge"><%= Number(i)+1 %></span>
-                                    <%= all[i].title %>
-                                </div>
-                                <div class="col-md-4">
-                                    <%= all[i].rating %>
-                                </div>
-                            </div>
-                        <% } %>
-                    <% } %>
-                    
-                </div>
-                <div class="entry-content hidden" id="popular">
-                    <h2><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Most Popular Movies</h2>
-                    <hr />
-                    <ul>
-                        <% if (popular !== null) { %>
-                            <% for (var i in popular) { %>
-                                <div class="entry_single">
-                                    <%= popular[i].title %>
+                    <div class="entry-content"  id="all-content">
+                        <% if (all.length !== 0) { %>
+                            <% for (var i in all) { %>
+                                <div class="entry-single-all">
+                                    <div class="col-md-9">
+                                        <span class="badge movie-badge"><%= Number(i)+1 %></span>
+                                        <%= all[i].title %></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon rating-bar" id="sizing-addon2">
+                                                <span class="glyphicon glyphicon-star yellow-star" aria-hidden="true"></span>
+                                                <% if (Number(all[i].rating)%1 === 0) { %>
+                                                <%= all[i].rating + ".0" %>
+                                                <% } else { %>
+                                                <%= all[i].rating %>
+                                                <% } %>
+                                            </span>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-info btn-sm">
+                                                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                                                    + 1
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                                                    - 1
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             <% } %>
+                        <% } else { %>
+                            <h3>No Movies</h3>
                         <% } %>
-                    </ul>
+                    </div>
                 </div>
                 
-                
+                <div class="entry-header hidden" id="popular">
+                    <h2><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Most Popular Movies</h2>
+                    <hr />
+                    <div class="entry-content" id="popular-content">       
+                        <% if (popular.length !== 0) { %>
+                            <% for (var i in popular) { %>
+                                <div class="entry-single-popular">
+                                    <div class="col-md-9">
+                                        <span class="badge movie-badge"><%= Number(i)+1 %></span>
+                                        <%= popular[i].title %></p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon rating-bar" id="sizing-addon2">
+                                                <span class="glyphicon glyphicon-star yellow-star" aria-hidden="true"></span>
+                                                <% if (Number(popular[i].rating)%1 === 0) { %>
+                                                <%= popular[i].rating + ".0" %>
+                                                <% } else { %>
+                                                <%= popular[i].rating %>
+                                                <% } %>
+                                            </span>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-info btn-sm">
+                                                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                                                    + 1
+                                                </button>
+                                                <button type="button" class="btn btn-danger btn-sm">
+                                                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                                                    - 1
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <% } %>
+                        <% } else { %>
+                            <h3>No Popular Movies</h3>
+                        <% } %>
+                    </div>
+                </div>
             </section>
             <section class="col-md-4">
                 <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a movie</h2>
                 <hr />
-                <form action="/signup" method="POST" class="form-horizontal">
+                <form id="new-entry-form" class="form-horizontal">
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="signupname">Username</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="signupname" class="form-control" id="signupname"/>
+                        <label class="control-label col-md-4" for="movie-name">Movie Title</label>
+                        <div class="col-md-8">
+                            <input type="text" name="movie-name" class="form-control" id="movie-name"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="control-label col-sm-3" for="signuppwd">Password</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="signuppwd" class="form-control" id="signuppwd"/>
+                        <label class="control-label col-md-4" for="init-rating">Initial Rating</label>
+                        <div class="col-md-8">
+                            <input type="text" name="init-rating" class="form-control" id="init-rating"/>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-3" for="confirmpwd">Confirm Password</label>
-                        <div class="col-sm-7">
-                            <input type="text" name="confirmpwd" class="form-control" id="confirmpwd"/>
-                        </div>
-                    </div>
-                    <% if (createError) { %>
-                        <div class="alert alert-danger" role="alert">
-                            <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
-                            <%= createError %>
-                        </div>
-                    <% } else if (createSuccess) { %>
-                        <div class="alert alert-success" role="alert">
-                            <span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
-                            <%= createSuccess %>
-                        </div>
-                    <% } %>
-                    <button type="submit" class="btn btn-default col-sm-offset-3" style="margin-top: 10px">Create Account
+                    <div class="alert alert-danger hidden" role="alert" id="create-error"></div>
+                    <div class="alert alert-success hidden" role="alert" id="create-success"></div>
+                    <button type="submit" class="btn btn-default col-md-offset-4" style="margin-top: 10px">Add
                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                     </button>
                 </form>

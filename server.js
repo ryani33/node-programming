@@ -12,24 +12,18 @@ app.use(bodyParser.json()); // for parsing application/json
 
 app.use('/assets', express.static('static'));
 
-// If you'll notice, there's not a single database call in the server file!
 app.get("/", function(request, response) {
     var allMovies, popularMovies;
     movieData.getAllMovies().then(function(allMovieList) {
         allMovies = allMovieList;
-        console.log(allMovies);
         movieData.getPopularMovies().then(function(popularMovieList){
             popularMovies = popularMovieList;
-            console.log(popularMovies);
-            response.render('pages/home', { all: allMovies, popular: popularMovies,
-                createError: null, createSuccess: null, updateError: null, updateSuccess: null });
+            response.render('pages/home', { all: allMovies, popular: popularMovies, updateError: null, updateSuccess: null });
         }, function(errorMessageOfPopular) {
-            response.render('pages/home', { all: allMovies, popular: null,
-                createError: null, createSuccess: null, updateError: errorMessageOfPopular, updateSuccess: null });
+            response.render('pages/home', { all: allMovies, popular: null, updateError: errorMessageOfPopular, updateSuccess: null });
         });
     }, function(errorMessageOfAll) {
-        response.render('pages/home', { all: null, popular: null,
-            createError: null, createSuccess: null, updateError: errorMessageOfAll, updateSuccess: null });
+        response.render('pages/home', { all: null, popular: null, updateError: errorMessageOfAll, updateSuccess: null });
     });
 });
 

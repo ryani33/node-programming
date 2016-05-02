@@ -2,10 +2,6 @@ body {
   position: relative;
 }
 
-.tooltip-inner {
-    width: 700px;
-}
-
 .scroll-fix {
     padding-top: 40px;
     margin-top: -40px;
@@ -13,5 +9,34 @@ body {
 .jumbotron {
     background-color: #f9f9f9;
     border: 1px solid #e8e8e8;
+}
+
+.movie-badge {
+    color: #fff;
+    background-color: #333;
+}
+
+.text-stay-clicked {
+    color: #fff;
+}
+
+.entry-single-popular {
+    padding-bottom: 40px;
+}
+
+.entry-single-all{
+    padding-bottom: 40px;
+}
+
+.rating-bar {
+    background-color: #fff;
+}
+
+.yellow-star {
+    color: orange;
+}
+
+.entry-content {
+    margin-bottom: 100px;
 }
 
