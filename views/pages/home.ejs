@@ -83,11 +83,11 @@
                                                 <% } %>
                                             </span>
                                             <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default btn-sm red-font-btn">
+                                                <button type="button" class="btn btn-default btn-sm red-font-btn btn-action" data-cmd="up" data-id="<%= popular[i]._id %>">
                                                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
                                                     + 1
                                                 </button>
-                                                <button type="button" class="btn btn-default btn-sm blue-font-btn">
+                                                <button type="button" class="btn btn-default btn-sm blue-font-btn btn-action" data-cmd="down" data-id="<%= popular[i]._id %>">
                                                     <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
                                                     - 1
                                                 </button>
@@ -95,7 +95,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-1">
-                                        <button type="button" class="btn btn-default btn-sm gray-font-btn">
+                                        <button type="button" class="btn btn-default btn-sm gray-font-btn btn-action" data-cmd="delete" data-id="<%= popular[i]._id %>">
                                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                                         </button>
                                     </div>

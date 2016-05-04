@@ -55,7 +55,7 @@
         }
     });
     
-    /* display the new single entry of all */
+    /* refresh or display the new single entry of all */
     function all_add_new(title, rating, id, type, parent) {
         var row_0 = '<div class="entry-single-all">',
             row_1 = '<div class="col-md-8"> ' + title + '</p></div><div class="col-md-3"><div class="input-group"><span class="input-group-addon rating-bar yellow-font-btn" id="sizing-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>',
@@ -77,7 +77,7 @@
         }
     }
     
-    /* display the new single entry of popular */
+    /* refresh or display the new single entry of popular */
     function popular_add_new(title, rating, id, type, parent) {
         var row_0 = '<div class="entry-single-popular">',
             row_1 = '<div class="col-md-8"> ' + title + '</p></div><div class="col-md-3"><div class="input-group"><span class="input-group-addon rating-bar yellow-font-btn" id="sizing-addon2"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>',
@@ -95,17 +95,28 @@
                 $("#popular-content").html(row_0 + row_1 + row_2 + row_3);
             }
         } else if (type === 2) {
-            //parent.css({"color": "red", "border": "2px solid red"});;
+            parent.html(row_1 + row_2);
         }
     }
     
     /* btn-action */
-    $( "button.btn-action" ).click(function() {
+    $( ".entry-content" ).on("click", ".btn-action", function() { 
         var cmd = $(this).data('cmd');
         var id = $(this).data('id');
-        var obj, 
+        var obj, mode, parentOfUpAndDown, parentOfUpAndDownPop, parentOfDelete, parentOfDeletePop;
+        if ($(this).parent().parent().parent().parent().hasClass("entry-single-all") || $(this).parent().parent().hasClass("entry-single-all")) {
+            mode = "all";
             parentOfUpAndDown = $(this).parent().parent().parent().parent(),
-            parentOfDelete = $(this).parent().parent();
+            parentOfUpAndDownPop = $(".entry-single-popular").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]').parent().parent().parent().parent(),
+            parentOfDelete = $(this).parent().parent(),
+            parentOfDeletePop = $(".entry-single-popular").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]').parent().parent();
+        } else if ($(this).parent().parent().parent().parent().hasClass("entry-single-popular") || $(this).parent().parent().hasClass("entry-single-popular")) {
+            mode = "popular";
+            parentOfUpAndDownPop = $(this).parent().parent().parent().parent(),
+            parentOfUpAndDown = $(".entry-single-all").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]').parent().parent().parent().parent(),
+            parentOfDeletePop = $(this).parent().parent(),
+            parentOfDelete = $(".entry-single-all").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]').parent().parent();
+        }
         if (cmd === "up") {
             var getRequestConfig = {
                 method: "GET",
@@ -128,9 +139,16 @@
                     })
                 };
                 $.ajax(putRequestConfig).then(function(responseMessage) {
-                    all_add_new(obj.title, obj.rating + 1, id, 2, parentOfUpAndDown);
-                    if (obj.rating + 1 >= 3) {
-                        popular_add_new(obj.title, obj.rating + 1, id, 2, parentOfUpAndDown);
+                    if (mode === "all") {
+                        all_add_new(obj.title, obj.rating + 1, id, 2, parentOfUpAndDown);
+                        if (obj.rating >= 3) {
+                            popular_add_new(obj.title, obj.rating + 1, id, 2, parentOfUpAndDownPop);
+                        } else if (obj.rating + 1 >= 3) {
+                            popular_add_new(obj.title, obj.rating + 1, id, 1, null);
+                        }
+                    } else if (mode === "popular") {
+                        popular_add_new(obj.title, obj.rating + 1, id, 2, parentOfUpAndDownPop);
+                        all_add_new(obj.title, obj.rating + 1, id, 2, parentOfUpAndDown);
                     }
                 });
             });
@@ -157,14 +175,50 @@
                     })
                 };
                 $.ajax(putRequestConfig).then(function(responseMessage) {
-                    all_add_new(obj.title, obj.rating - 1, id, 2, parentOfUpAndDown);
-                    if (obj.rating - 1 >= 3) {
-                        popular_add_new(obj.title, obj.rating - 1, id, 2, parentOfUpAndDown);
+                    if (mode == "all") {
+                        all_add_new(obj.title, obj.rating - 1, id, 2, parentOfUpAndDown);
+                        if (obj.rating >= 3) {
+                            popular_add_new(obj.title, obj.rating - 1, id, 2, parentOfUpAndDownPop);
+                            if (obj.rating - 1 < 3) {
+                                parentOfUpAndDownPop.remove();
+                            }
+                        }
+                    } else if (mode === "popular") {
+                        all_add_new(obj.title, obj.rating - 1, id, 2, parentOfUpAndDown);
+                        if (obj.rating - 1 < 3) {
+                            parentOfUpAndDownPop.remove();
+                        } else {
+                            popular_add_new(obj.title, obj.rating - 1, id, 2, parentOfUpAndDownPop);
+                        }
+                    }
+                    if ($(".entry-single-popular").length === 0) {
+                        $("#popular-content").html("<h3>No Popular Movies</h3>");
                     }
                 });
             });
         } else if (cmd === "delete") {
-            parentOfDelete.remove();;
+            $.ajax({
+                url: "/api/movies/" + id,
+                type: "DELETE",
+                success: function(result) {
+                    if (mode === "all") {
+                        parentOfDelete.css({"color": "red", "border": "2px solid red"});
+                        parentOfDelete.remove();
+                        if (parentOfDeletePop) {
+                            parentOfDeletePop.remove();
+                        }
+                    } else if (mode === "popular") {
+                        parentOfDelete.remove();
+                        parentOfDeletePop.remove();
+                    }
+                    if ($(".entry-single-all").length === 0) {
+                        $("#all-content").html("<h3>No Movies</h3>");
+                    }
+                    if ($(".entry-single-popular").length === 0) {
+                        $("#popular-content").html("<h3>No Popular Movies</h3>");
+                    }
+                }
+            });
         }
     });
 
