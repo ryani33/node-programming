@@ -29,11 +29,23 @@ body {
 }
 
 .rating-bar {
-    background-color: #fff;
+    background-color: #f9f9f9;
 }
 
-.yellow-star {
+.yellow-font-btn {
     color: orange;
+}
+
+.blue-font-btn {
+    color: cornflowerblue;
+}
+
+.red-font-btn {
+    color: orangered;
+}
+
+.gray-font-btn {
+    color: dimgray;
 }
 
 .entry-content {
