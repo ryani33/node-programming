@@ -64,6 +64,8 @@
         
         if (Number(rating)%1 === 0) {
             rating = rating + ".0";
+        } else {
+            rating = Number(rating).toFixed(1);
         }
         row_2 = ' ' + rating + row_2;
         if (type === 1) {
@@ -86,6 +88,8 @@
         
         if (Number(rating)%1 === 0) {
             rating = rating + ".0";
+        } else {
+            rating = Number(rating).toFixed(1);
         }
         row_2 = ' ' + rating + row_2;
         if (type === 1) {

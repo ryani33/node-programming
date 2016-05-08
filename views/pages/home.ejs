@@ -34,7 +34,7 @@
                                                 <% if (Number(all[i].rating)%1 === 0) { %>
                                                 <%= all[i].rating + ".0" %>
                                                 <% } else { %>
-                                                <%= all[i].rating %>
+                                                <%= Number(all[i].rating).toFixed(1) %>
                                                 <% } %>
                                             </span>
                                             <div class="input-group-btn">
@@ -79,7 +79,7 @@
                                                 <% if (Number(popular[i].rating)%1 === 0) { %>
                                                 <%= popular[i].rating + ".0" %>
                                                 <% } else { %>
-                                                <%= popular[i].rating %>
+                                                <%= Number(popular[i].rating).toFixed(1) %>
                                                 <% } %>
                                             </span>
                                             <div class="input-group-btn">
