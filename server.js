@@ -18,12 +18,12 @@ app.get("/", function(request, response) {
         allMovies = allMovieList;
         movieData.getPopularMovies().then(function(popularMovieList){
             popularMovies = popularMovieList;
-            response.render('pages/home', { all: allMovies, popular: popularMovies, updateError: null, updateSuccess: null });
+            response.render('pages/home', { all: allMovies, popular: popularMovies, loadError: null});
         }, function(errorMessageOfPopular) {
-            response.render('pages/home', { all: allMovies, popular: null, updateError: errorMessageOfPopular, updateSuccess: null });
+            response.render('pages/home', { all: allMovies, popular: null, loadError: errorMessageOfPopular});
         });
     }, function(errorMessageOfAll) {
-        response.render('pages/home', { all: null, popular: null, updateError: errorMessageOfAll, updateSuccess: null });
+        response.render('pages/home', { all: null, popular: null, loadError: errorMessageOfAll});
     });
 });
 

@@ -52,3 +52,13 @@ body {
     margin-bottom: 100px;
 }
 
+.breadcrumb-white {
+    background-color: #fff;
+    margin-top: 20px;
+    margin-bottom: -20px;
+}
+
+.hover-non-decoration:hover, :active, :visited{
+    text-decoration: none;
+}
+

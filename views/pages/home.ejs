@@ -8,17 +8,28 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <ul class="nav navbar-nav">
-                <li><a id="all-trigger" href="#">All Movies</a></li>
-                <li><a id="popular-trigger" href="#">Most Popular Movies</a></li>
+                <li><a class="all-trigger" href="#">All Movies</a></li>
+                <li><a class="popular-trigger" href="#">Most Popular Movies</a></li>
             </ul>
         </div>
     </nav>
     <% include ../partials/header %>
     <div class="container">
+        
         <main class="row">
             <section class="col-md-8">
                 <div class="entry-header" id="all">
-                    <h2><span class="glyphicon glyphicon-film" aria-hidden="true"></span> All Movies</h2>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h2><span class="glyphicon glyphicon-film" aria-hidden="true"></span> All Movies</h2>
+                        </div>
+                        <div class="col-md-5">
+                            <ol class="breadcrumb breadcrumb-white">
+                                <li><a class="all-trigger hover-non-decoration" href="#">All Movies</a></li>
+                                <li><a class="popular-trigger hover-non-decoration" href="#">Most Popular Movies</a></li>
+                            </ol>
+                        </div>
+                    </div>
                     <hr />
                     <div class="entry-content"  id="all-content">
                         <% if (all.length !== 0) { %>
@@ -37,6 +48,29 @@
                                                 <%= Number(all[i].rating).toFixed(1) %>
                                                 <% } %>
                                             </span>
+                                            <% if (all[i].rating + ".0" === "5.0" || Number(all[i].rating).toFixed(1) === "5.0") { %>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default btn-sm red-font-btn btn-action" data-cmd="up" data-id="<%= all[i]._id %>" disabled="disabled">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                    + 1
+                                                </button>
+                                                <button type="button" class="btn btn-default btn-sm blue-font-btn btn-action" data-cmd="down" data-id="<%= all[i]._id %>">
+                                                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                                                    - 1
+                                                </button>
+                                            </div>
+                                            <% } else if (all[i].rating + ".0" === "0.0" || Number(all[i].rating).toFixed(1) === "0.0") { %>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default btn-sm red-font-btn btn-action" data-cmd="up" data-id="<%= all[i]._id %>">
+                                                    <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
+                                                    + 1
+                                                </button>
+                                                <button type="button" class="btn btn-default btn-sm blue-font-btn btn-action" data-cmd="down" data-id="<%= all[i]._id %>" disabled="disabled">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                    - 1
+                                                </button>
+                                            </div>
+                                            <% } else { %>
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default btn-sm red-font-btn btn-action" data-cmd="up" data-id="<%= all[i]._id %>">
                                                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
@@ -47,6 +81,7 @@
                                                     - 1
                                                 </button>
                                             </div>
+                                            <% } %>
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -63,7 +98,17 @@
                 </div>
                 
                 <div class="entry-header hidden" id="popular">
-                    <h2><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Most Popular Movies</h2>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <h2><span class="glyphicon glyphicon-certificate" aria-hidden="true"></span> Most Popular Movies</h2>
+                        </div>
+                        <div class="col-md-5">
+                            <ol class="breadcrumb breadcrumb-white">
+                                <li><a class="all-trigger hover-non-decoration" href="#">All Movies</a></li>
+                                <li><a class="popular-trigger hover-non-decoration" href="#">Most Popular Movies</a></li>
+                            </ol>
+                        </div>
+                    </div>
                     <hr />
                     <div class="entry-content" id="popular-content">       
                         <% if (popular.length !== 0) { %>
@@ -82,6 +127,18 @@
                                                 <%= Number(popular[i].rating).toFixed(1) %>
                                                 <% } %>
                                             </span>
+                                            <% if (popular[i].rating + ".0" === "5.0" || Number(popular[i].rating).toFixed(1) === "5.0") { %>
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-default btn-sm red-font-btn btn-action" data-cmd="up" data-id="<%= popular[i]._id %>" disabled="disabled">
+                                                    <span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span>
+                                                    + 1
+                                                </button>
+                                                <button type="button" class="btn btn-default btn-sm blue-font-btn btn-action" data-cmd="down" data-id="<%= popular[i]._id %>">
+                                                    <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+                                                    - 1
+                                                </button>
+                                            </div>
+                                            <% } else { %>
                                             <div class="input-group-btn">
                                                 <button type="button" class="btn btn-default btn-sm red-font-btn btn-action" data-cmd="up" data-id="<%= popular[i]._id %>">
                                                     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
@@ -92,6 +149,7 @@
                                                     - 1
                                                 </button>
                                             </div>
+                                            <% } %>
                                         </div>
                                     </div>
                                     <div class="col-md-1">
@@ -108,7 +166,11 @@
                 </div>
             </section>
             <section class="col-md-4">
-                <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a movie</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add a movie</h2>
+                    </div>
+                </div>
                 <hr />
                 <form id="new-entry-form" class="form-horizontal">
                     <div class="form-group">
@@ -123,7 +185,7 @@
                             <input type="text" name="init-rating" class="form-control" id="init-rating"/>
                         </div>
                     </div>
-                    <div class="alert alert-danger hidden" role="alert" id="create-error"></div>
+                    <div class="alert alert-danger hidden" role="alert" id="create-error"><%= loadError%></div>
                     <div class="alert alert-success hidden" role="alert" id="create-success"></div>
                     <button type="submit" class="btn btn-default col-md-offset-4" style="margin-top: 10px">Add
                         <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>

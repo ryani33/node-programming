@@ -1,11 +1,11 @@
 (function ($) {
     
-    $( "#popular-trigger" ).click(function() {
+    $( ".popular-trigger" ).click(function() {
         $("#all").addClass('hidden');
         $("#popular").removeClass('hidden');
     });
     
-    $( "#all-trigger" ).click(function() {
+    $( ".all-trigger" ).click(function() {
         $("#popular").addClass('hidden');
         $("#all").removeClass('hidden');
     });
@@ -26,24 +26,30 @@
         var createSuccessSpan = '<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span>';
 
         if (newName && newRating) {
-            var requestConfig = {
-                method: "POST",
-                url: "/api/movies",
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    title: newName,
-                    rating: newRating
-                })
-            };
-            $.ajax(requestConfig).then(function(responseMessage) {
-                createSuccess.html(createSuccessSpan + " " + responseMessage.title + " is created successfully.");
-                createSuccess.removeClass('hidden');
-                createError.addClass('hidden');
-                all_add_new(newName, newRating, responseMessage._id, 1, null);
-                if (newRating >= 3) {
-                    popular_add_new(newName, newRating, responseMessage._id, 1, null);
-                }
-            });
+            if (newRating > 5) {
+                createError.html(createErrorSpan + " The max value of rating is 5.");
+                createError.removeClass('hidden');
+                createSuccess.addClass('hidden');
+            } else {
+                var requestConfig = {
+                    method: "POST",
+                    url: "/api/movies",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        title: newName,
+                        rating: newRating
+                    })
+                };
+                $.ajax(requestConfig).then(function(responseMessage) {
+                    createSuccess.html(createSuccessSpan + " " + responseMessage.title + " is created successfully.");
+                    createSuccess.removeClass('hidden');
+                    createError.addClass('hidden');
+                    all_add_new(newName, newRating, responseMessage._id, 1, null);
+                    if (newRating >= 3) {
+                        popular_add_new(newName, newRating, responseMessage._id, 1, null);
+                    }
+                });
+            }   
         } else if (newName === "") {
             createError.html(createErrorSpan + " Please input the movie title.");
             createError.removeClass('hidden');
@@ -107,19 +113,22 @@
     $( ".entry-content" ).on("click", ".btn-action", function() { 
         var cmd = $(this).data('cmd');
         var id = $(this).data('id');
+        var thisBtn = $(this), correspondingBtn;
         var obj, mode, parentOfUpAndDown, parentOfUpAndDownPop, parentOfDelete, parentOfDeletePop;
         if ($(this).parent().parent().parent().parent().hasClass("entry-single-all") || $(this).parent().parent().hasClass("entry-single-all")) {
             mode = "all";
+            correspondingBtn = $(".entry-single-popular").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]');
             parentOfUpAndDown = $(this).parent().parent().parent().parent(),
-            parentOfUpAndDownPop = $(".entry-single-popular").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]').parent().parent().parent().parent(),
+            parentOfUpAndDownPop = correspondingBtn.parent().parent().parent().parent(),
             parentOfDelete = $(this).parent().parent(),
-            parentOfDeletePop = $(".entry-single-popular").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]').parent().parent();
+            parentOfDeletePop = correspondingBtn.parent().parent();
         } else if ($(this).parent().parent().parent().parent().hasClass("entry-single-popular") || $(this).parent().parent().hasClass("entry-single-popular")) {
             mode = "popular";
+            correspondingBtn = $(".entry-single-all").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]')
             parentOfUpAndDownPop = $(this).parent().parent().parent().parent(),
-            parentOfUpAndDown = $(".entry-single-all").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]').parent().parent().parent().parent(),
+            parentOfUpAndDown = correspondingBtn.parent().parent().parent().parent(),
             parentOfDeletePop = $(this).parent().parent(),
-            parentOfDelete = $(".entry-single-all").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]').parent().parent();
+            parentOfDelete = correspondingBtn.parent().parent();
         }
         if (cmd === "up") {
             var getRequestConfig = {
@@ -132,6 +141,9 @@
             };
             $.ajax(getRequestConfig).then(function(responseMessage) {
                 obj = responseMessage;
+                if (obj.rating + 1 > 5) {
+                    obj.rating = 4;
+                }
                 var putRequestConfig = {
                     method: "PUT",
                     url: "/api/movies/" + id,
@@ -154,6 +166,14 @@
                         popular_add_new(obj.title, obj.rating + 1, id, 2, parentOfUpAndDownPop);
                         all_add_new(obj.title, obj.rating + 1, id, 2, parentOfUpAndDown);
                     }
+                    if (obj.rating === 4) {
+                        var btn = $(".entry-single-all").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]');
+                        btn.attr("disabled", true);
+                        btn.html('<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> + 1');
+                        var pbtn = $(".entry-single-popular").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]');
+                        pbtn.attr("disabled", true);
+                        pbtn.html('<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> + 1');
+                    }
                 });
             });
             
@@ -168,6 +188,9 @@
             };
             $.ajax(getRequestConfig).then(function(responseMessage) {
                 obj = responseMessage;
+                if (obj.rating - 1 < 0) {
+                    obj.rating = 1;
+                }
                 var putRequestConfig = {
                     method: "PUT",
                     url: "/api/movies/" + id,
@@ -197,6 +220,11 @@
                     }
                     if ($(".entry-single-popular").length === 0) {
                         $("#popular-content").html("<h3>No Popular Movies</h3>");
+                    }
+                    if (obj.rating === 1) {
+                        var btn = $(".entry-single-all").find('[data-cmd="' + cmd + '"]' + '[data-id="' + id + '"]');
+                        btn.attr("disabled", true);
+                        btn.html('<span class="glyphicon glyphicon-ban-circle" aria-hidden="true"></span> - 1');
                     }
                 });
             });
