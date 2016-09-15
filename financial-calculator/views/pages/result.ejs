@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <div class="container">
+        <% include ../partials/header %>
+        
+        <main>
+            <h2><%= operationTitle %></h2>
+            <p>Here are the all parameters:</p>
+            <ul>
+            	<% if (type === 1) { %>
+            		<li>How many years until retirement: <%= param1 %></li>
+            		<li>The amount saving per month: <%= param2 %></li>
+            		<li>The yearly interest rate of investment: <%= param3 %></li>
+            	<% } else if (type === 2) { %>
+            		<li>How many years you are investing: <%= param1 %></li>
+            		<li>The initial amount: <%= param2 %></li>
+            		<li>The yearly interest rate of investment: <%= param3 %></li>
+            	<% } else if (type === 3) { %>
+            		<li>Monthly payment amount: <%= param1 %></li>
+            		<li>The initial loan amount: <%= param2 %></li>
+            		<li>The yearly interest rate of load: <%= param3 %></li>
+            	<% } %>
+            </ul>
+            <% if (type === 1 || type === 2) { %>
+            	<p>Total: <strong><%= result %> dollars</strong></p>
+            	<p>------- <strong><%= Math.round(result * 100) / 100 %> (Rounded) dollars</strong></p>
+            <% } else if (type === 3) { %>
+            	<p>Time: <strong><%= result %> month(s)</strong></p>
+            	<p>------ <strong><%= Math.round(result * 100) / 100 %> (Rounded) month(s)</strong></p>
+            <% } %>
+        </main>
+    </div>
+
+            
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- jQuery fallback -->
+    <script>
+        if (!window.jQuery) { document.write('<script src="/assets/js/jquery.js"><\/script>'); }
+    </script>
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/assets/js/bootstrap.min.js"></script>
+</body>
+
+</html>

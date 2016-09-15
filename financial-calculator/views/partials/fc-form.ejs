@@ -1,0 +1,102 @@
+<div class="row">
+        <div class="col-md-6">
+            <% if (locals.formType === "retire") { %>
+                <h3>Calculate Monthly Retirement Savings</h3>
+                <form action="/results/perMonthRetirementSavings" method="POST" class="form-horizontal" id="calculate-form-1">
+            <% } else if (locals.formType === "invest") { %>
+                <h3>Calculate Invested Amount</h3>
+                <form action="/results/investedAmount" method="POST" class="form-horizontal" id="calculate-form-2">
+            <% } else if (locals.formType === "loan") { %>
+                <h3>Calculate Loan Payoff</h3>
+                <form action="/results/loanPayoff" method="POST" class="form-horizontal" id="calculate-form-3">
+            <% } %>
+                <div class="form-group">
+                    <% if (locals.formType === "retire") { %>
+                        <label class="control-label col-sm-4" for="param11">
+                            How many years until retirement
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param11" class="form-control" id="param11"/>
+                        </div>
+                    <% } else if (locals.formType === "invest") { %>
+                        <label class="control-label col-sm-4" for="param21">
+                            How many years you are investing    
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param21" class="form-control" id="param21"/>
+                        </div>
+                    <% } else if (locals.formType === "loan") { %>
+                        <label class="control-label col-sm-4" for="param31">
+                            Monthly payment amount
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param31" class="form-control" id="param31"/>
+                        </div>
+                    <% } %>
+                </div>
+
+                <div class="form-group">
+                    <% if (locals.formType === "retire") { %>
+                        <label class="control-label col-sm-4" for="param12">
+                            The amount saving per month
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param12" class="form-control" id="param12"/>
+                        </div>
+                    <% } else if (locals.formType === "invest") { %>
+                        <label class="control-label col-sm-4" for="param22">
+                            The initial amount    
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param22" class="form-control" id="param22"/>
+                        </div>
+                    <% } else if (locals.formType === "loan") { %>
+                        <label class="control-label col-sm-4" for="param32">
+                            The initial loan amount
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param32" class="form-control" id="param32"/>
+                        </div>
+                    <% } %>
+                </div>
+
+                <div class="form-group">
+                    <% if (locals.formType === "retire") { %>
+                        <label class="control-label col-sm-4" for="param13">
+                            The yearly interest rate of investment
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param13" class="form-control" id="param13"/>
+                        </div>
+                    <% } else if (locals.formType === "invest") {%>
+                        <label class="control-label col-sm-4" for="param23">
+                            The yearly interest rate of investment
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param23" class="form-control" id="param23"/>
+                        </div>
+                    <% } else if (locals.formType === "loan") { %>
+                        <label class="control-label col-sm-4" for="param33">
+                            The yearly interest rate of loan
+                        </label>
+                        <div class="col-sm-8">
+                            <input type="text" name="param33" class="form-control" id="param33"/>
+                        </div>
+                    <% } %>
+                </div>
+
+                <button type="submit" class="btn btn-default col-md-offset-3" style="margin-bottom:20px;" id="submit">
+                Submit</button>
+            </form>
+            <% if (locals.formType === "retire") { %>
+                <div class="alert alert-danger calculator-alerts hidden" id="calculator-error-1">
+                </div>
+            <% } else if (locals.formType === "invest") {%>
+                <div class="alert alert-danger calculator-alerts hidden" id="calculator-error-2">
+                </div>
+            <% } else if (locals.formType === "loan") { %>
+                <div class="alert alert-danger calculator-alerts hidden" id="calculator-error-3">
+                </div>
+            <% } %>
+        </div>
+</div>
