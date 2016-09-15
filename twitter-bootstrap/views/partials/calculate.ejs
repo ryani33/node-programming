@@ -1,0 +1,52 @@
+
+<ul class="nav nav-tabs" style="margin-top:30px;">
+    <li class="active">
+        <a data-toggle="tab" href="#retire">Monthly Retirement Savings</a>
+    </li>
+    <li>
+        <a data-toggle="tab" href="#invest">Invested Amount</a>
+    </li>
+    <li>
+        <a data-toggle="tab" href="#loan">Loan Payoff</a>
+    </li>
+</ul>
+
+<div class="tab-content" style="margin-top:10px;">
+    <div id="retire" class="tab-pane fade in active">
+        <section class="fc-form">
+            <% locals.formType = "retire"; %>
+            <% include ../partials/fc-form %>
+        </section>
+    </div>
+    <div id="invest" class="tab-pane fade">
+        <section class="fc-form">
+            <% locals.formType = "invest"; %>
+            <% include ../partials/fc-form %>
+        </section>
+    </div>
+    <div id="loan" class="tab-pane fade"> 
+        <section class="fc-form">
+            <% locals.formType = "loan"; %>
+            <% include ../partials/fc-form %>
+        </section>
+    </div>        
+</div>
+
+<div id="resultModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Result</h4>
+            </div>
+            <div class="modal-body">
+                <% include ../partials/result %>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
