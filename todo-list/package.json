@@ -1,0 +1,25 @@
+{
+  "name": "cs-546-a2-xiaoyu-zhai",
+  "version": "1.0.0",
+  "description": "This is an assignment from Stevens CS546, to make a todo list app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryani33/todo-list.git"
+  },
+  "author": "Xiaoyu Zhai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryani33/todo-list/issues"
+  },
+  "homepage": "https://github.com/ryani33/todo-list#readme",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "express": "^4.13.4",
+    "ejs": "^2.4.1",
+    "request-promise": "^2.0.0"
+  }
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <div class="container">
+        <% include ../partials/header %>
+
+        <main>
+            <h2><%= type %></h2>
+            <hr/>
+            <% if (todos.length > 0) { %>
+                <ul>
+                    <% todos.forEach(function(todo) { %>
+                        <li>
+                            <% if (todo.status === "open") {%>
+                                <form action="/api/todo/<%=todo.id%>/completed?from=index" method="POST">
+                                    <button type="submit" style="background-color:Transparent; border:none; outline:none;">
+                                        <i class="glyphicon glyphicon-unchecked" aria-hidden="true"></i> 
+                                    </button>
+                                    <a href="/api/todo/<%=todo.id%>"><%= todo.taskTitle%></a>
+                                </form>
+                            <% } else if (todo.status === "completed") { %>
+                                <form action="/api/todo/<%=todo.id%>/open?from=index" method="POST">
+                                    <button type="submit" style="background-color:Transparent; border:none; outline:none;">
+                                        <i class="glyphicon glyphicon-check" aria-hidden="true"></i> 
+                                    </button>
+                                    <a href="/api/todo/<%=todo.id%>"><%= todo.taskTitle%></a>
+                                </form>
+                            <% } %>
+                        </li>
+                    <% }) %>
+                </ul>
+            <% } else if (trueType === "completed") { %>
+                <p> <i>- No Completed Todo Tasks Currently, Please Complete One.</i> <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></p>
+            <% } else if (trueType === "all") { %>
+                <p> <i>- No Any Tasks Currently, Please Create One Below.</i> <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></p>
+            <% } else { %>
+                <p> <i>- No Open Todo Tasks Currently, Please Create One Below.</i> <span class="glyphicon glyphicon-hand-down" aria-hidden="true"></span></p>
+            <% } %>
+            
+            <a href="/api/todo/?type=completed">Completed</a> - 
+            <a href="/api/todo/?type=open">Open</a> - 
+            <a href="/api/todo/?type=all">All</a> 
+                       
+            <section>
+                <% include ../partials/todo-form %>
+            </section>
+        </main>
+    </div>
+
+</html>

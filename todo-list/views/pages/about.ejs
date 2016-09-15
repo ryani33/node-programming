@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body>
+    <div class="container">
+        <% include ../partials/header %>
+        <h1>CS-546 Assignment 2</h1>
+        <h2>Xiaoyu Zhai</h2>
+        <hr/>
+        <main>
+        	<h2>My To-Do List</h2>
+        	<h3>GET /</h3>
+        	<p>You will get this "About" page, tell you all about this Todo List App.</p>
+        	<h3>GET /api/todo</h3>
+        	<p>You will get all Todo entries currently stored in memory.</p>
+        	<h3>GET /api/todo/open</h3>
+        	<p>You will get all Todo entries currently stored in memory that has a status of <code>open</code>.</p>
+        	<h3>GET /api/todo/completed</h3>
+        	<p>You will get all Todo entries currently stored in memory that has a status of <code>completed</code>.</p>
+        	<h3>GET /api/todo/:id</h3>
+        	<p>You will get a single Todo entry currently stored in memory.</p>
+        	<h3>POST /api/todo</h3>
+        	<p>You will create and store a new Todo entry; if successful, it will respond with the new ToDoEntry in the response. The request should only support the following fields: <code>author</code>, <code>taskTitle</code>, and <code>taskDescription</code>, and error out if any are missing.</p>
+        	<h3>PUT /api/todo/:id</h3>
+        	<p>You will update the Todo entry with the id of <code>:id</code> and respond with the updated entry. The request should only support the following fields: <code>status</code>, <code>taskTitle</code>, and <code>taskDescription</code>. It will only error out if none of those fields are provided; you do not need to provide all of them.</p>
+        	<h3>POST /api/todo/:id/notes</h3>
+        	<p>You will add a note to the Todo entry with an id of <code>:id</code> and respond with the updated entry.</p>
+        	<h3>DELETE /api/todo/:id</h3>
+        	<p>You will remove the Todo entry with the id of <code>:id</code>.</p>
+            <hr/>
+            <h2>Howto</h2>
+            <ul>
+                <li>You can click the checkbox of a task to <strong>complete</strong> in index page.</li>
+                <li>You can click the button of a task to <strong>complete</strong> in detail page under "Status" tab.</li>
+                <li>You can <strong>add notes</strong> for a task in detail page under "Add Notes" tab.</li>
+                <li>You can <strong>edit</strong> every task in detail page under "Edit" tab.</li>
+                <li>You can <strong>delete</strong> a task in detail page under "Delete" tab.</li>
+            </ul>
+        </main>
+    </div>
+
+    <% include ../partials/scripts %>
+</body>
+
+</html>
