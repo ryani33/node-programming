@@ -1,0 +1,22 @@
+{
+  "name": "cs-546-lab6-xiaoyu-zhai",
+  "version": "1.0.0",
+  "description": "This is a project from Stevens CS546, to complete the CSS work.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryani33/styling-a-book.git"
+  },
+  "author": "Xiaoyu Zhai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ryani33/styling-a-book/issues"
+  },
+  "homepage": "https://github.com/ryani33/styling-a-book#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
